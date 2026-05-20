@@ -1,0 +1,47 @@
+# FDE Knowledge Hub - Python Dependencies
+
+# 核心框架
+# openai 包同时支持 OpenAI 和 MiniMax（MiniMax 兼容 OpenAI Chat Completions 接口）。
+# anthropic 包已不再必需，MiniMax 通过 openai 包的 base_url 参数接入。
+langchain>=0.1.0
+langchain-community>=0.0.10
+openai>=1.10.0
+
+# 数据处理
+pandas>=2.0.0
+numpy>=1.24.0
+networkx>=3.0
+
+# 文档处理
+unstructured[all]>=0.11.0
+pypdf>=3.17.0
+python-docx>=1.1.0
+markdown>=3.5.0
+
+# 向量数据库
+qdrant-client>=1.7.0
+pinecone-client>=2.2.0
+
+# AI 工具
+tiktoken>=0.5.0
+sentence-transformers>=2.2.0
+faiss-cpu>=1.7.0
+
+# 自动化
+schedule>=1.2.0
+rich>=13.0.0
+click>=8.1.0
+python-dotenv>=1.0.0
+pyperclip>=1.8.0
+pymupdf>=1.23.0
+
+# API 集成
+google-auth>=2.0.0
+google-api-python-client>=2.100.0
+requests>=2.31.0
+
+# 开发工具
+pytest>=7.4.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0

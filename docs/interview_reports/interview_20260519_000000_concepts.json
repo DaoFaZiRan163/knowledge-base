@@ -1,0 +1,1009 @@
+{
+  "created_at": "2026-05-19T00:00:00.000000",
+  "topics": [
+    "LangChain与LangGraph对比",
+    "KV缓存与前缀缓存",
+    "混合检索与召回率",
+    "模型微调与强化学习",
+    "SFT与DPO",
+    "数据清洗与评测集",
+    "并发熔断与容灾降级",
+    "ReAct与HyDE",
+    "HITL与JobQueue",
+    "MCP协议与配额预占",
+    "输出Guardrail与成本监控",
+    "Langfuse与可观测",
+    "RRF融合与技能匹配"
+  ],
+  "conversation_summary": "AI/LLM工程化全栈知识：框架选型、缓存机制、检索优化、训练方法、系统架构与可观测",
+  "concepts": [
+    {
+      "name": "LangChain",
+      "category": "LLM框架",
+      "description": "用于构建LLM应用的框架，提供组件、链和代理机制",
+      "key_points": [
+        "组件（Components）：LLM调用、提示词模板、文档加载器、向量存储等模块化组件",
+        "链（Chains）：将多个组件串联执行的工作流",
+        "代理（Agents）：让LLM自主决策调用哪些工具"
+      ],
+      "capabilities": [
+        "简化与多种LLM的集成（OpenAI、Anthropic、本地模型等）",
+        "RAG（检索增强生成）支持",
+        "工具调用和函数执行",
+        "内存管理和对话状态"
+      ],
+      "use_cases": [
+        "简单的LLM流程（如RAG）",
+        "快速原型开发"
+      ]
+    },
+    {
+      "name": "LangGraph",
+      "category": "LLM框架",
+      "description": "LangChain的扩展，专为有状态、多步骤的复杂工作流设计",
+      "key_points": [
+        "有状态图（Stateful Graph）：节点间传递状态，支持循环和条件分支",
+        "设计理念：将工作流建模为有向图，节点是操作/LLM调用，边是控制流"
+      ],
+      "capabilities": [
+        "内置状态传递",
+        "原生支持循环",
+        "复杂流程编排"
+      ],
+      "use_cases": [
+        "多轮对话带内存",
+        "自主Agent循环（Agentic Loop）",
+        "复杂业务流程编排",
+        "错误恢复和回溯"
+      ]
+    },
+    {
+      "name": "KV缓存",
+      "category": "LLM推理优化",
+      "description": "在Transformer自注意力机制中保存已计算的Key-Value向量，避免重复计算",
+      "working_principle": [
+        "生成新token时，需要重新计算所有历史token的K/V",
+        "KV缓存将已计算的K/V保存下来，避免重复计算",
+        "新token只需计算与最新token的attention，大幅降低延迟"
+      ],
+      "challenge": "当上下文很长时，KV缓存体积庞大，显存成为瓶颈"
+    },
+    {
+      "name": "前缀缓存",
+      "category": "LLM推理优化",
+      "description": "识别不同请求之间的共同前缀，复用已计算的KV缓存",
+      "working_principle": [
+        "多个请求共享相同system prompt/instructions时",
+        "识别可复用的文本前缀",
+        "直接复用前缀的KV缓存，只需计算后半部分"
+      ],
+      "advantages": [
+        "降低首token延迟（TTFT）",
+        "节省计算资源",
+        "多请求场景下效果显著"
+      ],
+      "typical_applications": [
+        "多轮对话，system prompt不变",
+        "RAG场景，文档块作为共享前缀",
+        "批量请求处理相似任务"
+      ],
+      "note": "需要服务端支持（如vLLM的prefix caching机制），并依赖显式的提示词结构化来识别可复用的前缀"
+    },
+    {
+      "name": "混合检索",
+      "category": "RAG检索策略",
+      "description": "结合多种检索方法以提升检索质量的策略，弥补单一检索方式的不足",
+      "methods": [
+        {
+          "type": "稀疏检索（Sparse Retrieval）",
+          "examples": ["BM25", "TF-IDF"],
+          "strengths": ["精确关键词匹配", "对专有名词/术语效果好"],
+          "weaknesses": ["语义理解有限", "无法处理同义词/上下文"]
+        },
+        {
+          "type": "密集检索（Dense Retrieval）",
+          "examples": ["向量检索", "Embedding相似度搜索"],
+          "strengths": ["语义理解强", "处理同义词和复杂表达"],
+          "weaknesses": ["对专有名词/精确术语效果一般", "计算开销较大"]
+        },
+        {
+          "type": "其他补充检索",
+          "examples": ["字面检索", "知识图谱检索"],
+          "strengths": ["可作为补充信号"]
+        }
+      ],
+      "implementation_approaches": [
+        "并行混合：多种检索结果合并后重排序（Rerank）",
+        "顺序混合：先用一种检索缩小范围，再用另一种精筛",
+        "级联混合：从粗到细多阶段检索"
+      ],
+      "key_considerations": [
+        "不同检索结果的相关性权重分配",
+        "如何合并和去重",
+        "重排序（Rerank）模型的选择"
+      ]
+    },
+    {
+      "name": "召回率",
+      "category": "评估指标",
+      "description": "衡量检索系统找到相关结果的能力，是RAG等检索场景的核心指标",
+      "definition": "Recall = 检索到的相关文档数 / 系统中相关文档总数",
+      "formula": "Recall = TP / (TP + FN)",
+      "interpretation": "在所有应该被找到的文档中，系统实际找到了多少",
+      "why_matters": [
+        "RAG场景：漏掉关键文档会直接影响回答质量",
+        "召回率低=系统过于保守，容易遗漏重要信息",
+        "与精确率（Precision）通常存在权衡关系"
+      ],
+      "metrics_related": [
+        {
+          "name": "精确率（Precision）",
+          "formula": "Precision = TP / (TP + FP)",
+          "meaning": "检索结果中有多少是相关的"
+        },
+        {
+          "name": "F1分数",
+          "formula": "F1 = 2 * Precision * Recall / (Precision + Recall)",
+          "meaning": "精确率和召回率的调和平均"
+        },
+        {
+          "name": "MRR（Mean Reciprocal Rank）",
+          "meaning": "第一个相关结果排名的倒数均值"
+        },
+        {
+          "name": "NDCG",
+          "meaning": "考虑排序位置的评估指标"
+        }
+      ],
+      "improvement_approaches": [
+        "优化检索策略（混合检索）",
+        "增加检索数量（但可能降低精确率）",
+        "改进Embedding模型",
+        "查询扩展/改写"
+      ]
+    },
+    {
+      "name": "模型微调",
+      "category": "LLM训练方法",
+      "description": "在预训练模型基础上，使用特定数据集进一步训练以适应特定任务或领域",
+      "why_finetune": [
+        "通用大模型在特定任务上表现不够好",
+        "需要模型学习特定领域知识/术语",
+        "需要特定输出格式或风格",
+        "降低推理成本（相比prompt engineering）"
+      ],
+      "types": [
+        {
+          "name": "全量微调（Full Fine-tuning）",
+          "description": "更新所有模型参数",
+          "pros": ["效果最好", "能学习到最多知识"],
+          "cons": ["计算成本高", "容易过拟合", "灾备恢复困难"]
+        },
+        {
+          "name": "LoRA（Low-Rank Adaptation）",
+          "description": "只更新低秩分解后的少量参数",
+          "pros": ["计算高效", "参数量小", "可多任务共享原模型"],
+          "cons": ["效果略低于全量微调", "需要调超参数（rank, alpha）"],
+          "note": "当前最流行的微调方法"
+        },
+        {
+          "name": "QLoRA",
+          "description": "量化基础模型 + LoRA微调",
+          "pros": ["更低的显存占用", "可在消费级GPU上微调大模型"],
+          "cons": ["训练速度较慢", "量化可能带来精度损失"]
+        },
+        {
+          "name": "Adapter",
+          "description": "在Transformer层间插入小型适配器模块",
+          "pros": ["参数量小", "可多个 Adapter 组合"],
+          "cons": ["推理延迟增加", "需要专门优化"]
+        },
+        {
+          "name": "Prefix Tuning / Prompt Tuning",
+          "description": "只优化少量连续提示向量",
+          "pros": ["参数量极小"],
+          "cons": ["效果不稳定", "对某些任务效果不佳"]
+        }
+      ],
+      "process": [
+        "1. 准备领域/任务数据集",
+        "2. 选择基础模型",
+        "3. 选择微调方法",
+        "4. 设置超参数（学习率、batch size、epoch）",
+        "5. 训练并监控loss和评估指标",
+        "6. 评估和测试",
+        "7. 部署"
+      ],
+      "when_to_use": [
+        "有明确的领域知识需要注入",
+        "需要特定任务的高精度",
+        "Prompt Engineering 效果不够时",
+        "有充足的训练数据（通常需要几千到几万条）"
+      ]
+    },
+    {
+      "name": "强化学习",
+      "category": "机器学习范式",
+      "description": "通过智能体与环境交互，以奖励信号为引导学习最优策略的机器学习方法",
+      "core_concepts": [
+        {
+          "name": "智能体（Agent）",
+          "description": "学习和决策的主体"
+        },
+        {
+          "name": "环境（Environment）",
+          "description": "智能体所处的外部世界"
+        },
+        {
+          "name": "状态（State）",
+          "description": "环境在某一时刻的描述"
+        },
+        {
+          "name": "动作（Action）",
+          "description": "智能体可以采取的行为"
+        },
+        {
+          "name": "奖励（Reward）",
+          "description": "环境对智能体动作的反馈信号"
+        },
+        {
+          "name": "策略（Policy）",
+          "description": "从状态到动作的映射"
+        },
+        {
+          "name": "价值函数（Value Function）",
+          "description": "评估某状态或状态-动作对的长期价值"
+        }
+      ],
+      "key_algorithms": [
+        {
+          "name": "Q-Learning",
+          "description": "学习动作价值函数 Q(s,a)，off-policy算法"
+        },
+        {
+          "name": "DQN（Deep Q-Network）",
+          "description": "用深度学习网络近似Q函数"
+        },
+        {
+          "name": "Policy Gradient",
+          "description": "直接优化策略，REINFORCE算法"
+        },
+        {
+          "name": "PPO（Proximal Policy Optimization）",
+          "description": "Policy Gradient的改进，稳定高效，当前最流行"
+        },
+        {
+          "name": "DDPG",
+          "description": "连续动作空间的深度强化学习"
+        },
+        {
+          "name": "SAC（Soft Actor-Critic）",
+          "description": "最大熵强化学习，探索性好"
+        }
+      ],
+      "in_llm_context": [
+        {
+          "name": "RLHF",
+          "full_name": "Reinforcement Learning from Human Feedback",
+          "description": "用人类反馈训练reward模型，再用RL优化LLM",
+          "process": ["预训练模型", "监督微调（SFT）", "训练Reward模型", "RL优化（PPO）"],
+          "purpose": "让LLM输出符合人类偏好和价值观"
+        },
+        {
+          "name": "RLAIF",
+          "full_name": "RL from AI Feedback",
+          "description": "用AI反馈替代人类反馈训练Reward模型"
+        },
+        {
+          "name": "DPO",
+          "full_name": "Direct Preference Optimization",
+          "description": "直接用偏好数据优化策略，无需独立的reward模型和RL步骤",
+          "advantage": "简化训练流程，避免PPO的复杂性"
+        },
+        {
+          "name": "GRPO",
+          "full_name": "Group Relative Policy Optimization",
+          "description": "DeepSeek提出的方法，用组内相对排序替代显式reward模型"
+        }
+      ],
+      "llm_training_stage": "预训练 → SFT（监督微调） → RLHF/DPO → 部署",
+      "challenges": [
+        "Reward hacking（模型钻空子）",
+        "训练不稳定",
+        "人类偏好的一致性和复杂性",
+        "分布偏移（Distribution shift）"
+      ]
+    },
+    {
+      "name": "SFT",
+      "full_name": "监督微调（Supervised Fine-Tuning）",
+      "category": "LLM训练方法",
+      "description": "使用人工标注的问答对数据集，通过有监督的方式让模型学习如何回答，是RLHF的前置步骤",
+      "position_in_training": "预训练模型 → SFT → RLHF/DPO → 部署",
+      "data_format": {
+        "input": "提示词（Prompt）",
+        "output": "人工编写的理想回答（Ground Truth）"
+      },
+      "characteristics": [
+        "直接学习输入-输出映射",
+        "训练稳定，收敛速度快",
+        "依赖于数据质量",
+        "无法捕捉人类偏好（如幽默、有帮助的回答）"
+      ],
+      "limitations": [
+        "模型可能学习到数据中的偏差",
+        "难以处理模糊或开放式问题",
+        "需要大量高质量人工标注数据"
+      ],
+      "note": "SFT告诉模型'正确答案是什么'，而RLHF/DPO告诉模型'哪个答案更好'"
+    },
+    {
+      "name": "DPO",
+      "full_name": "Direct Preference Optimization",
+      "category": "LLM对齐方法",
+      "description": "直接用偏好数据优化策略，无需独立的Reward模型和RL步骤",
+      "vs_rlhf": "RLHF需要训练Reward模型再进行PPO优化；DPO绕过Reward模型，直接用偏好对优化策略",
+      "data_format": {
+        "input": "提示词（Prompt）",
+        "preferred_output": "人类偏好的回答",
+        "rejected_output": "人类不喜欢的回答"
+      },
+      "advantages": [
+        "简化训练流程",
+        "无需单独训练Reward模型",
+        "避免PPO的复杂性和不稳定性",
+        "计算效率更高"
+      ],
+      "how_it_works": [
+        "构建偏好数据集（chosen/rejected对）",
+        "定义策略模型和参考模型",
+        "直接最大化偏好回答的概率，最小化拒绝回答的概率"
+      ],
+      "challenges": [
+        "需要高质量的偏好标注数据",
+        "对数据分布敏感",
+        "可能在简单任务上不如SFT"
+      ],
+      "popular_models_using": ["Llama 3, Mistral等主流开源模型"]
+    },
+    {
+      "name": "数据清洗",
+      "category": "数据工程",
+      "description": "对原始数据进行预处理，去除噪声、错误和不一致，提升数据质量的过程",
+      "why_matters": [
+        "数据质量直接决定模型效果",
+        "GIGO原则：垃圾进，垃圾出",
+        "清洗后的数据能显著提升模型性能"
+      ],
+      "common_issues": [
+        {
+          "type": "噪声数据",
+          "examples": ["拼写错误", "乱码", "无关内容"]
+        },
+        {
+          "type": "重复数据",
+          "examples": ["完全重复", "近似重复", "模板填充重复"]
+        },
+        {
+          "type": "脏数据",
+          "examples": ["格式不一致", "缺失字段", "异常值"]
+        },
+        {
+          "type": "偏差数据",
+          "examples": ["选择偏差", "确认偏差", "标注者偏差"]
+        },
+        {
+          "type": "有害内容",
+          "examples": ["隐私信息", "恶意内容", "毒性内容"]
+        }
+      ],
+      "清洗方法": [
+        {
+          "step": "去重",
+          "methods": ["完全匹配去重", "MinHash/LSH近似去重", "句子嵌入相似度去重"]
+        },
+        {
+          "step": "质量过滤",
+          "methods": ["语言检测", "质量评分模型", "规则过滤（如长度、特殊字符）"]
+        },
+        {
+          "step": "格式标准化",
+          "methods": ["统一编码", "标准化日期/数字格式", "去除HTML/markdown"]
+        },
+        {
+          "step": "隐私处理",
+          "methods": ["PII检测与脱敏", "差分隐私", "正则替换"]
+        },
+        {
+          "step": "毒性过滤",
+          "methods": ["分类器过滤", "关键词过滤", "人工审核"]
+        }
+      ],
+      "llm_specific": [
+        "思维链（CoT）数据清洗：去除逻辑错误",
+        "对话数据清洗：过滤低质量对话/无效回复",
+        "领域数据清洗：提取领域相关的高质量内容"
+      ],
+      "metrics": ["数据量减少比例", "质量提升幅度", "下游任务指标变化"]
+    },
+    {
+      "name": "评测集",
+      "category": "模型评估",
+      "description": "用于评估模型性能的标准化数据集，是模型迭代优化的重要基准",
+      "why_matters": [
+        "量化模型能力",
+        "支持模型间公平比较",
+        "指导模型优化方向",
+        "防止主观臆测"
+      ],
+      "types": [
+        {
+          "name": "通用能力评测",
+          "examples": ["MMLU（多学科知识）", "BBH（复杂推理）", "HellaSwag（常识推理）", "GSM8K（数学）"],
+          "purpose": "评估模型的通用能力"
+        },
+        {
+          "name": "垂直领域评测",
+          "examples": ["MedicalQA（医疗）", "LegalBench（法律）", "CFinBench（金融）"],
+          "purpose": "评估领域专业能力"
+        },
+        {
+          "name": "代码能力评测",
+          "examples": ["HumanEval", "MBPP", "LiveCodeBench"],
+          "purpose": "评估代码生成能力"
+        },
+        {
+          "name": "对齐/安全性评测",
+          "examples": ["TruthfulQA", "ToxiGen", "SafetyBench"],
+          "purpose": "评估模型的安全性和对齐程度"
+        },
+        {
+          "name": "中文评测",
+          "examples": ["CMMLU", "C-Eval", "SuperCLUE"],
+          "purpose": "评估中文能力"
+        }
+      ],
+      "construction_principles": [
+        "多样性：覆盖不同难度和类型",
+        "无污染：避免训练数据泄露",
+        "可复现：明确的评估标准和流程",
+        "无歧义：答案客观可判定"
+      ],
+      "evaluation_metrics": [
+        {
+          "name": "精确匹配（EM）",
+          "meaning": "答案完全一致"
+        },
+        {
+          "name": "F1分数",
+          "meaning": "部分匹配的精确率和召回率"
+        },
+        {
+          "name": "通过率",
+          "meaning": "代码能否通过测试用例"
+        }
+      ],
+      "common_pitfalls": [
+        "测试数据泄露到训练集",
+        "评测集被刷题（Test set memorization）",
+        "评测集与真实用户场景脱节",
+        "只关注单一指标"
+      ]
+    },
+    {
+      "name": "并发熔断",
+      "category": "系统可靠性",
+      "description": "当系统负载过高或下游服务异常时，主动中断请求以保护系统的机制",
+      "why_needed": [
+        "防止雪崩效应：一个服务失败导致全局崩溃",
+        "保护系统不被过载",
+        "保证核心服务可用"
+      ],
+      "triggers": [
+        "错误率超过阈值（如5分钟内错误率>50%）",
+        "响应延迟超过阈值（如P99延迟>2s）",
+        "线程池/连接池饱和",
+        "CPU使用率过高"
+      ],
+      "states": [
+        {
+          "name": "Closed（关闭）",
+          "description": "正常状态，请求直接通过"
+        },
+        {
+          "name": "Open（开启）",
+          "description": "熔断触发，所有请求被拒绝/fallback"
+        },
+        {
+          "name": "Half-Open（半开）",
+          "description": "试探性恢复，允许部分请求通过"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "阈值",
+          "description": "触发熔断的错误率/延迟阈值"
+        },
+        {
+          "name": "窗口期",
+          "description": "统计指标的时间窗口"
+        },
+        {
+          "name": "恢复超时",
+          "description": "熔断持续时间"
+        },
+        {
+          "name": "半开试探比例",
+          "description": "半开状态放行的请求比例"
+        }
+      ],
+      "in_llm_context": [
+        "LLM API 调用超时/报错时触发",
+        "Token 速率超限时触发",
+        "配合降级策略：返回缓存结果/简化回答"
+      ]
+    },
+    {
+      "name": "容灾降级",
+      "category": "系统可靠性",
+      "description": "在系统部分组件故障时，通过备用方案保证核心功能可用的策略",
+      "principle": "放弃部分非核心功能，保证核心功能可用",
+      "降级策略": [
+        {
+          "level": "一级降级",
+          "action": "返回缓存结果",
+          "scenario": "LLM响应慢或超时"
+        },
+        {
+          "level": "二级降级",
+          "action": "使用更小更快的模型",
+          "scenario": "主模型不可用"
+        },
+        {
+          "level": "三级降级",
+          "action": "返回预设模板回答",
+          "scenario": "所有模型都不可用"
+        },
+        {
+          "level": "四级降级",
+          "action": "友好提示+工单记录",
+          "scenario": "完全不可用"
+        }
+      ],
+      "容灾设计": [
+        {
+          "name": "多地域部署",
+          "description": "不同地域部署副本，单地域故障不影响其他地域"
+        },
+        {
+          "name": "多活架构",
+          "description": "多个节点同时提供服务，互为备份"
+        },
+        {
+          "name": "冷备/热备",
+          "description": "热备：实时同步；冷备：定期同步"
+        },
+        {
+          "name": "故障检测与自动切换",
+          "description": "健康检查 + 自动切换"
+        }
+      ],
+      "in_llm_system": [
+        {
+          "component": "向量数据库",
+          "fallback": "切换到备选DB或基于关键词的检索"
+        },
+        {
+          "component": "LLM API",
+          "fallback": "切换Provider或使用本地小模型"
+        },
+        {
+          "component": "Embedding服务",
+          "fallback": "使用轻量级Embedding模型"
+        }
+      ],
+      "key_principles": [
+        "降级要有明确的服务质量边界",
+        "降级后要有告警和后续恢复",
+        "定期演练容灾切换"
+      ]
+    },
+    {
+      "name": "ReAct",
+      "full_name": "Reasoning + Acting",
+      "category": "Agent推理框架",
+      "description": "让Agent在推理过程中交替进行思考（Thought）和行动（Action）的框架，通过观察（Observation）结果来指导下一步决策",
+      "loop": "Thought → Action → Observation → Thought → Action → ...",
+      "vs_pure_reasoning": "纯推理模型只输出思考链；ReAct 模型同时进行推理和工具调用",
+      "vs_reflexion": "Reflexion 侧重于通过自我反思改进；ReAct 侧重于与外部环境交互获取观察",
+      "steps": [
+        {
+          "step": "Thought（思考）",
+          "description": "分析当前状态，决定下一步行动"
+        },
+        {
+          "step": "Action（行动）",
+          "description": "执行工具调用、API请求等动作"
+        },
+        {
+          "step": "Observation（观察）",
+          "description": "获取行动结果，更新上下文"
+        }
+      ],
+      "in_llm_context": [
+        "复杂多步骤查询需要多次工具调用",
+        "每步基于上一步结果决定下一步",
+        "可用于 Agentic RAG、对话式推理等场景"
+      ],
+      "max_steps_limit": "防止无限循环，设置最大步数限制，超出触发 fallback"
+    },
+    {
+      "name": "HyDE",
+      "full_name": "Hypothetical Document Embeddings",
+      "category": "RAG检索策略",
+      "description": "先用LLM生成假设性回答文档，再用该假设文档做向量检索的策略",
+      "why_hyde": "直接用query检索可能有词汇gap；假设文档能生成语义相关的答案片段，缩小检索距离",
+      "process": [
+        "1. 用户query进入",
+        "2. LLM生成一个假设性的答案文档（可能是错误的，但语义相关）",
+        "3. 用假设文档做Dense向量检索",
+        "4. 检索结果返回给LLM生成最终答案"
+      ],
+      "hybrid_with_bm25": "HyDE假设文档做Dense检索 + 原始query做BM25稀疏检索 → RRF融合取Top-K",
+      "trade_off": "增加一次LLM调用（生成假设文档），但检索质量通常显著提升",
+      "suitable_for": "知识库问答、文档检索等需要语义匹配的的场景"
+    },
+    {
+      "name": "HITL",
+      "full_name": "Human-In-The-Loop",
+      "category": "人机协作模式",
+      "description": "在自动化流程中引入人工介入的机制，用于处理AI无法独立搞定的高风险或复杂任务",
+      "when_to_use": [
+        "高风险核查（涉及金钱、权限变更）",
+        "申诉处理（需要人工判断）",
+        "AI置信度低的情况",
+        "异常流程需要人工审批"
+      ],
+      "implementation": [
+        "流程暂停，挂起等待人工处理",
+        "通过WebSocket实时推送状态给前端",
+        "后台管理系统提供人工处理界面",
+        "处理完成后自动恢复流程"
+      ],
+      "in_job_queue": "异步Job创建后，用户获得job_id，流程继续；Job结果通过WebSocket推送，全程无需阻塞等待"
+    },
+    {
+      "name": "Job Queue",
+      "category": "异步任务架构",
+      "description": "将耗时的异步操作封装为Job，提交到队列执行，避免阻塞主请求",
+      "why_async": [
+        "耗时操作（图片生成、TTS）不应阻塞用户请求",
+        "允许重试和错误处理",
+        "提升系统吞吐量和稳定性"
+      ],
+      "job_lifecycle": {
+        "pending": "Job创建，等待执行",
+        "processing": "正在执行",
+        "completed": "成功完成",
+        "failed": "失败（可重试）"
+      },
+      "hangfire_usage": "使用Hangfire作为Job Queue基础设施",
+      "pattern": [
+        "异步工具触发时创建Job，返回job_id",
+        "预占配额槽位（估算值）",
+        "Job完成：结算实际消耗，释放多余预占",
+        "Job失败：释放预占配额，可重试3次"
+      ],
+      "polling_vs_websocket": [
+        "轮询：前端每2秒调用/api/job/{id}查询状态",
+        "WebSocket：实时推送结果，更高效"
+      ],
+      "result_storage": "结果（图片URL/音频URL）写入OSS/S3 + Redis（TTL 24小时）"
+    },
+    {
+      "name": "MCP",
+      "full_name": "Model Context Protocol",
+      "category": "AI工具集成协议",
+      "description": "Anthropic提出的标准化协议，用于AI模型与外部工具/数据源的安全集成",
+      "role": "AI应用与外部系统间的'USB接口'——统一的方式连接各种工具",
+      "components": [
+        {
+          "name": "MCP Host",
+          "description": "AI应用（如Claude Desktop）"
+        },
+        {
+          "name": "MCP Client",
+          "description": "连接到MCP Server的客户端"
+        },
+        {
+          "name": "MCP Server",
+          "description": "提供工具能力的服务器（如数据库查询、API调用）"
+        }
+      ],
+      "in_this_architecture": "MCP Server在接口层，做Tool注册与发现、请求鉴权、参数Schema校验、版本路由",
+      "tools_mentioned": [
+        "calculate_commission（佣金计算）",
+        "get_member_network（客户网络分析）",
+        "generate_campaign（营销活动生成）",
+        "answer_member_query（会员查询）",
+        "query_commission_history（历史佣金查询）"
+      ]
+    },
+    {
+      "name": "配额预占与结算",
+      "category": "资源管理",
+      "description": "在Job执行前预占配额槽位，完成后结算实际消耗的管理机制",
+      "why_pre_allocation": "防止Job在后台执行时配额已耗尽，导致资源浪费和用户体验问题",
+      "flow": [
+        "Job创建时预占配额（如图片预占1张，TTS预占预估字符数）",
+        "Job执行",
+        "输出Guardrail通过后精确扣减实际消耗",
+        "Job失败则释放预占"
+      ],
+      "why_settlement_after_guardrail": "因为实际消耗包含所有中间LLM调用（HyDE、上下文压缩、结论摘要），需要等全部执行完才能确定",
+      "three_tier_quota": [
+        {
+          "tier": "免费",
+          "text": "5,000 tokens/天",
+          "image": "3张/天",
+          "tts": "2,000字符/天",
+          "over_limit": "锁定，返回429+升级引导"
+        },
+        {
+          "tier": "基础",
+          "text": "50,000 tokens/天",
+          "image": "30张/天",
+          "tts": "20,000字符/天",
+          "over_limit": "只读降级"
+        },
+        {
+          "tier": "高级",
+          "text": "200,000 tokens/天",
+          "image": "100张/天",
+          "tts": "100,000字符/天",
+          "over_limit": "仅限速"
+        }
+      ]
+    },
+    {
+      "name": "输出Guardrail",
+      "category": "安全控制",
+      "description": "对AI生成的完整输出进行检查和过滤的安全机制",
+      "coverage": "文本、图片、音频三类输出全覆盖",
+      "checks": [
+        "内容合规检查",
+        "直销违规话术检测",
+        "Prompt Injection二次检测（输出侧）",
+        "图片内容安全审核"
+      ],
+      "position_in_flow": "在精确扣减配额之前执行",
+      "fail_action": "检测不通过，不返回给用户，不扣减配额，记录日志"
+    },
+    {
+      "name": "系统成本监控",
+      "category": "运维监控",
+      "description": "独立于单用户配额，监控整体API支出的机制",
+      "monitored_apis": ["Claude API", "MiniMax", "Flux 2", "即梦", "MiniMax Speech"],
+      "thresholds": [
+        {
+          "level": "Warning",
+          "trigger": "日预算消耗达70%",
+          "action": "告警通知"
+        },
+        {
+          "level": "Critical",
+          "trigger": "日预算消耗达90%",
+          "action": "自动降级"
+        }
+      ],
+      "critical_actions": [
+        "暂停图片生成Job队列",
+        "TTS全部降级为Turbo版本"
+      ],
+      "integration": "成本数据写入Langfuse Dashboard，按Agent类型、会员等级维度分组统计"
+    },
+    {
+      "name": "Langfuse",
+      "category": "可观测性平台",
+      "description": "开源的LLM应用可观测性平台，支持全链路追踪、评估和质量监控",
+      "trace_capabilities": [
+        "Agent路径追踪",
+        "工具调用序列",
+        "Token消耗（含所有中间调用）",
+        "RAG检索的memory_id",
+        "Job状态",
+        "API健康状态"
+      ],
+      "alerting": "异常可设置30秒告警",
+      "memory_trace": "每次引用长期记忆的条目记录在trace里，支持事后解释",
+      "eval_integration": "支持与Inspect AI评测套件集成，评估结果可追溯"
+    },
+    {
+      "name": "RRF",
+      "full_name": "Reciprocal Rank Fusion",
+      "category": "多路检索融合",
+      "description": "一种将多路检索结果进行融合排序的算法，常用于混合检索场景",
+      "formula": "RRF_score(d) = Σ 1/(k + rank_i(d))，其中k通常为60",
+      "why_rrf": "不同检索方法（BM25、Dense向量）的排序体系不同，需要融合为统一排序",
+      "used_in": "HyDE+Dense检索与BM25稀疏检索的两路结果合并",
+      "advantage": "简单高效，无需训练，适用于任意多路检索融合"
+    },
+    {
+      "name": "Skills",
+      "category": "Agent执行模式",
+      "description": "预定义的执行脚本（JSON/YAML），描述已知场景的MCP调用序列",
+      "vs_free_react": [
+        "Skills：匹配到预定义场景直接执行，无需LLM推理",
+        "Free ReAct：未匹配场景交还Agent自由推理"
+      ],
+      "workflow": [
+        "请求进入Agent",
+        "尝试匹配Skills（基于意图/场景）",
+        "匹配成功：按预定义脚本执行",
+        "匹配失败：进入Free ReAct推理"
+      ],
+      "benefit": "已知场景执行效率高、结果稳定；未知场景保持灵活性"
+    },
+    {
+      "name": "上下文压缩",
+      "category": "上下文管理",
+      "description": "当会话上下文超过阈值时，将早期对话压缩为摘要的机制",
+      "trigger_condition": "超过8,000 tokens时触发",
+      "process": [
+        "调用MiniMax将早期对话轮次压缩为摘要",
+        "用摘要替换原始记录",
+        "保留最近N轮完整对话"
+      ],
+      "quality_verification": "压缩后验证关键实体（member_id、金额、政策名称、人名）是否保留",
+      "fail_action": "验证失败则放弃压缩，保留原始最近轮次",
+      "cost": "压缩消耗token计入用户配额"
+    },
+    {
+      "name": "Session TTL",
+      "category": "状态管理",
+      "description": "会话有效期管理，30分钟无活动自动过期",
+      "synced_expiration": [
+        "Redis session key",
+        "LangGraph Checkpoint"
+      ],
+      "benefit": "两个系统同步过期，避免状态不一致"
+    },
+    {
+      "name": "主动消息引擎",
+      "category": "用户运营",
+      "description": "通过心跳机制主动向会员推送个性化消息，驱动活跃和转化",
+      "scheduling_tiers": [
+        {
+          "frequency": "高频（每30分钟）",
+          "events": "实时事件触发——佣金结算完成、团队新成员下单、申请审核通过"
+        },
+        {
+          "frequency": "中频（每天）",
+          "events": "进度提醒——距升级还差X积分、本月佣金预计X元、今日签到提醒"
+        },
+        {
+          "frequency": "低频（每周/每月）",
+          "events": "佣金月报、团队成长摘要、权益到期提醒"
+        }
+      ],
+      "trigger_rules": [
+        "等级进度超过80% → 升级冲刺提醒",
+        "7天未登录 → 召回消息",
+        "团队成员首单 → 激励通知",
+        "月末佣金待结算 → 结算提醒"
+      ],
+      "generation": "MiniMax根据触发事件+会员稳定偏好+Qdrant历史结论生成个性化文案",
+      "limit": "每位会员每天最多3条主动消息，防止骚扰",
+      "delivery": [
+        "WebSocket：在线实时推送",
+        "Push Notification：离线推送（APNs/FCM）",
+        "站内消息队列：存储供下次登录展示"
+      ],
+      "preference_management": "会员可配置接收类型和频率，写入PostgreSQL稳定偏好字段"
+    },
+    {
+      "name": "Eval CI Gate",
+      "category": "模型评估",
+      "description": "将评测集评估嵌入CI流程，作为PR阻断门，确保每次代码变更不降低模型质量",
+      "评测集类型": [
+        {
+          "name": "佣金计算评测集",
+          "count": "100条",
+          "metric": "计算精度"
+        },
+        {
+          "name": "政策问答评测集",
+          "count": "200条",
+          "metric": "Recall@5 ≥ 0.85，使用HyDE检索路径"
+        },
+        {
+          "name": "意图分类评测集",
+          "count": "300条",
+          "metric": "意图准确率"
+        }
+      ],
+      "blocking_criteria": "四类指标全部纳入PR阻断门",
+      "when_triggered": [
+        "代码PR时",
+        "知识库更新后"
+      ],
+      "inspect_ai": "使用的评测框架"
+    },
+    {
+      "name": "知识库维护管道",
+      "category": "RAG运维",
+      "description": "文档上传到向量库更新的完整自动化流程",
+      "pipeline_steps": [
+        "运营人员上传文档（PDF/Word）",
+        "Hangfire Job触发",
+        "文档解析",
+        "分块（Chunking）",
+        "MiniMax Embedding生成向量",
+        "写入Qdrant新版本"
+      ],
+      "version_management": [
+        "旧版本向量标记deprecated",
+        "保留7天后物理删除",
+        "版本信息记录在PostgreSQL",
+        "支持回滚"
+      ],
+      "eval_gate": "对政策问答评测集跑Recall@5，低于0.85告警并暂停旧向量删除，等人工确认"
+    },
+    {
+      "name": "短路策略",
+      "category": "Agent优化",
+      "description": "简单数据查询不走ReAct循环，直接Tool Call的优化策略",
+      "rationale": "并非所有请求都需要复杂推理；简单查询直接工具调用更高效",
+      "pattern": "匹配到简单查询模式 → 直接Tool Call → 返回结果",
+      "benefit": "降低延迟、减少token消耗、提高吞吐量"
+    },
+    {
+      "name": "多模型路由",
+      "category": "推理架构",
+      "description": "根据任务复杂度自动选择合适模型的机制",
+      "routing_logic": [
+        {
+          "model": "Claude",
+          "scenario": "复杂场景，maxSteps=8"
+        },
+        {
+          "model": "MiniMax M2.7",
+          "scenario": "常规场景，maxSteps=4"
+        }
+      ],
+      "failover": "Claude不可用时切换到MiniMax（由Orchestrator内的路由器执行）"
+    }
+  ],
+  "comparison_tables": [
+    {
+      "title": "LangChain vs LangGraph",
+      "headers": ["特性", "LangChain", "LangGraph"],
+      "rows": [
+        ["工作流模型", "线性链（Chain）", "有向图（Graph）"],
+        ["状态管理", "有限", "内置状态传递"],
+        ["循环支持", "困难", "原生支持"],
+        ["复杂流程", "一般", "擅长"]
+      ]
+    },
+    {
+      "title": "KV缓存 vs 前缀缓存",
+      "headers": ["维度", "KV缓存", "前缀缓存"],
+      "rows": [
+        ["目的", "避免单次请求内重复计算", "跨请求复用已计算结果"],
+        ["粒度", "token级", "文本前缀级"],
+        ["收益", "加速生成", "降低首token延迟、节省资源"]
+      ]
+    }
+  ],
+  "simple_summary": {
+    "langchain_vs_langgraph": "LangChain=串起来执行一次；LangGraph=有状态的循环流程",
+    "kv_vs_prefix_cache": "KV缓存=单次请求内token级避免重复；前缀缓存=跨请求复用已计算结果",
+    "finetune_vs_rl": "微调=在特定数据上继续训练；强化学习=以奖励信号引导策略",
+    "sft_vs_dpo": "SFT=学习正确答案；DPO=学习哪个答案更好"
+  },
+  "related_modules": [
+    "llm_engineering",
+    "rag_systems",
+    "ml_basics"
+  ]
+}

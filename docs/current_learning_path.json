@@ -1,0 +1,1755 @@
+{
+  "generated_at": "2026-05-18T18:45:17.327111",
+  "summary": {
+    "total_phases": 4,
+    "total_weeks": 74,
+    "total_hours": 740,
+    "hours_per_week": 10,
+    "completed_modules": 0,
+    "remaining_modules": 11
+  },
+  "phases": {
+    "Phase 1: 技术基础": [
+      {
+        "id": "programming_basics",
+        "title": "编程基础与代码质量",
+        "description": "掌握编程语言核心概念和代码质量标准",
+        "duration_weeks": 4,
+        "prerequisites": [],
+        "resources": [
+          {
+            "type": "book",
+            "title": "代码整洁之道",
+            "author": "Robert Martin"
+          },
+          {
+            "type": "book",
+            "title": "重构：改善既有代码的设计",
+            "author": "Martin Fowler"
+          }
+        ],
+        "projects": [
+          "实现一个简单的文本处理工具",
+          "重构遗留代码"
+        ],
+        "objectives": [
+          "理解 SOLID 原则",
+          "掌握重构技巧",
+          "编写可测试代码"
+        ],
+        "adjusted_duration_weeks": 8,
+        "start_week": 1,
+        "end_week": 8,
+        "estimated_hours": 80
+      },
+      {
+        "id": "system_design",
+        "title": "系统设计原理",
+        "description": "掌握分布式系统设计的基本原理",
+        "duration_weeks": 3,
+        "prerequisites": [
+          "programming_basics"
+        ],
+        "resources": [
+          {
+            "type": "book",
+            "title": "设计数据密集型应用",
+            "author": "Martin Kleppmann"
+          },
+          {
+            "type": "online",
+            "title": "System Design Primer",
+            "url": "https://github.com/donnemartin/system-design-primer"
+          }
+        ],
+        "projects": [
+          "设计一个高可用 API 网关",
+          "实现分布式缓存系统"
+        ],
+        "objectives": [
+          "理解 CAP 定理",
+          "掌握负载均衡策略",
+          "设计容错系统"
+        ],
+        "adjusted_duration_weeks": 6,
+        "start_week": 9,
+        "end_week": 14,
+        "estimated_hours": 60
+      },
+      {
+        "id": "database_optimization",
+        "title": "数据库性能优化",
+        "description": "掌握关系型数据库的设计和优化技巧",
+        "duration_weeks": 3,
+        "prerequisites": [
+          "programming_basics"
+        ],
+        "resources": [
+          {
+            "type": "book",
+            "title": "高性能 MySQL",
+            "author": "Baron Schwartz"
+          },
+          {
+            "type": "book",
+            "title": "SQL 反模式",
+            "author": "Bill Karwin"
+          }
+        ],
+        "projects": [
+          "优化慢查询",
+          "设计分库分表方案"
+        ],
+        "objectives": [
+          "理解索引原理",
+          "掌握查询优化",
+          "设计数据库架构"
+        ],
+        "adjusted_duration_weeks": 6,
+        "start_week": 15,
+        "end_week": 20,
+        "estimated_hours": 60
+      }
+    ],
+    "Phase 2: AI工程化": [
+      {
+        "id": "ml_basics",
+        "title": "机器学习基础",
+        "description": "理解机器学习的基本概念和算法",
+        "duration_weeks": 4,
+        "prerequisites": [
+          "programming_basics",
+          "database_optimization"
+        ],
+        "resources": [
+          {
+            "type": "book",
+            "title": "机器学习",
+            "author": "Tom Mitchell"
+          },
+          {
+            "type": "course",
+            "title": "Andrew Ng ML Specialization",
+            "platform": "Coursera"
+          }
+        ],
+        "projects": [
+          "实现分类算法",
+          "构建推荐系统原型"
+        ],
+        "objectives": [
+          "理解 ML 流程",
+          "掌握常见算法",
+          "评估模型性能"
+        ],
+        "adjusted_duration_weeks": 8,
+        "start_week": 21,
+        "end_week": 28,
+        "estimated_hours": 80
+      },
+      {
+        "id": "llm_engineering",
+        "title": "LLM 工程化实践",
+        "description": "掌握大语言模型的工程化应用",
+        "duration_weeks": 6,
+        "prerequisites": [
+          "ml_basics"
+        ],
+        "resources": [
+          {
+            "type": "book",
+            "title": "Build an LLM from Scratch",
+            "author": "Sebastian Raschka"
+          },
+          {
+            "type": "book",
+            "title": "AI Engineering",
+            "author": "Chip Huyen"
+          }
+        ],
+        "projects": [
+          "实现 RAG 系统",
+          "构建 Multi-Agent 应用"
+        ],
+        "objectives": [
+          "理解 Transformer 架构",
+          "掌握 RAG 技术",
+          "实现 Agent 系统"
+        ],
+        "adjusted_duration_weeks": 12,
+        "start_week": 29,
+        "end_week": 40,
+        "estimated_hours": 120
+      },
+      {
+        "id": "rag_systems",
+        "title": "RAG 系统设计与优化",
+        "description": "深入掌握检索增强生成技术",
+        "duration_weeks": 4,
+        "prerequisites": [
+          "llm_engineering"
+        ],
+        "resources": [
+          {
+            "type": "paper",
+            "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+          },
+          {
+            "type": "framework",
+            "title": "LangChain",
+            "url": "https://python.langchain.com/"
+          }
+        ],
+        "projects": [
+          "构建企业知识库",
+          "优化检索质量"
+        ],
+        "objectives": [
+          "掌握向量检索",
+          "优化上下文构建",
+          "设计混合检索策略"
+        ],
+        "adjusted_duration_weeks": 8,
+        "start_week": 41,
+        "end_week": 48,
+        "estimated_hours": 80
+      }
+    ],
+    "Phase 3: 产品业务": [
+      {
+        "id": "product_thinking",
+        "title": "产品思维与设计",
+        "description": "理解产品设计原理和用户体验",
+        "duration_weeks": 3,
+        "prerequisites": [],
+        "resources": [
+          {
+            "type": "book",
+            "title": "启示录",
+            "author": "Marty Cagan"
+          },
+          {
+            "type": "book",
+            "title": "用户体验要素",
+            "author": "Jesse James Garrett"
+          }
+        ],
+        "projects": [
+          "设计 AI 产品原型",
+          "用户调研分析"
+        ],
+        "objectives": [
+          "理解用户需求",
+          "掌握产品设计流程",
+          "学习用户体验原则"
+        ],
+        "adjusted_duration_weeks": 6,
+        "start_week": 49,
+        "end_week": 54,
+        "estimated_hours": 60
+      },
+      {
+        "id": "data_analysis",
+        "title": "数据分析与增长",
+        "description": "掌握数据驱动的产品决策方法",
+        "duration_weeks": 3,
+        "prerequisites": [],
+        "resources": [
+          {
+            "type": "book",
+            "title": "精益数据分析",
+            "author": "Alistair Croll"
+          },
+          {
+            "type": "tool",
+            "title": "Google Analytics",
+            "url": "https://analytics.google.com/"
+          }
+        ],
+        "projects": [
+          "设计数据指标体系",
+          "A/B 测试分析"
+        ],
+        "objectives": [
+          "理解数据指标",
+          "掌握增长分析方法",
+          "设计实验框架"
+        ],
+        "adjusted_duration_weeks": 6,
+        "start_week": 55,
+        "end_week": 60,
+        "estimated_hours": 60
+      },
+      {
+        "id": "market_positioning",
+        "title": "市场定位与策略",
+        "description": "理解产品定位和市场竞争策略",
+        "duration_weeks": 2,
+        "prerequisites": [
+          "product_thinking"
+        ],
+        "resources": [
+          {
+            "type": "book",
+            "title": "Obvious Awesome",
+            "author": "April Dunford"
+          },
+          {
+            "type": "book",
+            "title": "跨越鸿沟",
+            "author": "Geoffrey Moore"
+          }
+        ],
+        "projects": [
+          "竞品分析报告",
+          "定位策略文档"
+        ],
+        "objectives": [
+          "理解定位理论",
+          "分析竞争格局",
+          "制定市场策略"
+        ],
+        "adjusted_duration_weeks": 4,
+        "start_week": 61,
+        "end_week": 64,
+        "estimated_hours": 40
+      }
+    ],
+    "Phase 4: 咨询交付": [
+      {
+        "id": "client_management",
+        "title": "客户管理与沟通",
+        "description": "掌握客户关系管理和沟通技巧",
+        "duration_weeks": 2,
+        "prerequisites": [],
+        "resources": [
+          {
+            "type": "book",
+            "title": "客户成功",
+            "author": "Nick Mehta"
+          },
+          {
+            "type": "book",
+            "title": "演说之禅",
+            "author": "Garr Reynolds"
+          }
+        ],
+        "projects": [
+          "客户需求分析",
+          "演示文稿设计"
+        ],
+        "objectives": [
+          "理解客户心理",
+          "掌握沟通技巧",
+          "设计有效演示"
+        ],
+        "adjusted_duration_weeks": 4,
+        "start_week": 65,
+        "end_week": 68,
+        "estimated_hours": 40
+      },
+      {
+        "id": "project_delivery",
+        "title": "项目交付与变革管理",
+        "description": "掌握项目交付和组织变革管理",
+        "duration_weeks": 3,
+        "prerequisites": [
+          "client_management"
+        ],
+        "resources": [
+          {
+            "type": "standard",
+            "title": "PMBOK 指南",
+            "organization": "PMI"
+          },
+          {
+            "type": "book",
+            "title": "变革之心",
+            "author": "John Kotter"
+          }
+        ],
+        "projects": [
+          "项目计划制定",
+          "变革策略设计"
+        ],
+        "objectives": [
+          "理解项目管理",
+          "掌握变革管理",
+          "设计交付流程"
+        ],
+        "adjusted_duration_weeks": 6,
+        "start_week": 69,
+        "end_week": 74,
+        "estimated_hours": 60
+      }
+    ]
+  },
+  "milestones": [
+    {
+      "week": 20,
+      "title": "Phase 1: 技术基础 完成",
+      "description": "完成 Phase 1: 技术基础 的所有学习模块",
+      "deliverables": [
+        [
+          "实现一个简单的文本处理工具",
+          "重构遗留代码"
+        ],
+        [
+          "设计一个高可用 API 网关",
+          "实现分布式缓存系统"
+        ],
+        [
+          "优化慢查询",
+          "设计分库分表方案"
+        ]
+      ],
+      "celebration": "休息一周，回顾学习成果"
+    },
+    {
+      "week": 68,
+      "title": "Phase 2: AI工程化 完成",
+      "description": "完成 Phase 2: AI工程化 的所有学习模块",
+      "deliverables": [
+        [
+          "实现分类算法",
+          "构建推荐系统原型"
+        ],
+        [
+          "实现 RAG 系统",
+          "构建 Multi-Agent 应用"
+        ],
+        [
+          "构建企业知识库",
+          "优化检索质量"
+        ]
+      ],
+      "celebration": "休息一周，回顾学习成果"
+    },
+    {
+      "week": 132,
+      "title": "Phase 3: 产品业务 完成",
+      "description": "完成 Phase 3: 产品业务 的所有学习模块",
+      "deliverables": [
+        [
+          "设计 AI 产品原型",
+          "用户调研分析"
+        ],
+        [
+          "设计数据指标体系",
+          "A/B 测试分析"
+        ],
+        [
+          "竞品分析报告",
+          "定位策略文档"
+        ]
+      ],
+      "celebration": "休息一周，回顾学习成果"
+    },
+    {
+      "week": 206,
+      "title": "Phase 4: 咨询交付 完成",
+      "description": "完成 Phase 4: 咨询交付 的所有学习模块",
+      "deliverables": [
+        [
+          "客户需求分析",
+          "演示文稿设计"
+        ],
+        [
+          "项目计划制定",
+          "变革策略设计"
+        ]
+      ],
+      "celebration": "休息一周，回顾学习成果"
+    }
+  ],
+  "weekly_schedule": [
+    {
+      "week": 1,
+      "modules": [
+        {
+          "title": "编程基础与代码质量",
+          "phase": "Phase 1: 技术基础",
+          "progress": "12%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "编程基础与代码质量": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 2,
+      "modules": [
+        {
+          "title": "编程基础与代码质量",
+          "phase": "Phase 1: 技术基础",
+          "progress": "25%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "编程基础与代码质量": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 3,
+      "modules": [
+        {
+          "title": "编程基础与代码质量",
+          "phase": "Phase 1: 技术基础",
+          "progress": "37%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "编程基础与代码质量": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 4,
+      "modules": [
+        {
+          "title": "编程基础与代码质量",
+          "phase": "Phase 1: 技术基础",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "编程基础与代码质量": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 5,
+      "modules": [
+        {
+          "title": "编程基础与代码质量",
+          "phase": "Phase 1: 技术基础",
+          "progress": "62%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "编程基础与代码质量": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 6,
+      "modules": [
+        {
+          "title": "编程基础与代码质量",
+          "phase": "Phase 1: 技术基础",
+          "progress": "75%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "编程基础与代码质量": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 7,
+      "modules": [
+        {
+          "title": "编程基础与代码质量",
+          "phase": "Phase 1: 技术基础",
+          "progress": "87%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "编程基础与代码质量": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 8,
+      "modules": [
+        {
+          "title": "编程基础与代码质量",
+          "phase": "Phase 1: 技术基础",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "编程基础与代码质量": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 9,
+      "modules": [
+        {
+          "title": "系统设计原理",
+          "phase": "Phase 1: 技术基础",
+          "progress": "16%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "系统设计原理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 10,
+      "modules": [
+        {
+          "title": "系统设计原理",
+          "phase": "Phase 1: 技术基础",
+          "progress": "33%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "系统设计原理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 11,
+      "modules": [
+        {
+          "title": "系统设计原理",
+          "phase": "Phase 1: 技术基础",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "系统设计原理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 12,
+      "modules": [
+        {
+          "title": "系统设计原理",
+          "phase": "Phase 1: 技术基础",
+          "progress": "66%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "系统设计原理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 13,
+      "modules": [
+        {
+          "title": "系统设计原理",
+          "phase": "Phase 1: 技术基础",
+          "progress": "83%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "系统设计原理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 14,
+      "modules": [
+        {
+          "title": "系统设计原理",
+          "phase": "Phase 1: 技术基础",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "系统设计原理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 15,
+      "modules": [
+        {
+          "title": "数据库性能优化",
+          "phase": "Phase 1: 技术基础",
+          "progress": "16%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据库性能优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 16,
+      "modules": [
+        {
+          "title": "数据库性能优化",
+          "phase": "Phase 1: 技术基础",
+          "progress": "33%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据库性能优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 17,
+      "modules": [
+        {
+          "title": "数据库性能优化",
+          "phase": "Phase 1: 技术基础",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据库性能优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 18,
+      "modules": [
+        {
+          "title": "数据库性能优化",
+          "phase": "Phase 1: 技术基础",
+          "progress": "66%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据库性能优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 19,
+      "modules": [
+        {
+          "title": "数据库性能优化",
+          "phase": "Phase 1: 技术基础",
+          "progress": "83%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据库性能优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 20,
+      "modules": [
+        {
+          "title": "数据库性能优化",
+          "phase": "Phase 1: 技术基础",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据库性能优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 21,
+      "modules": [
+        {
+          "title": "机器学习基础",
+          "phase": "Phase 2: AI工程化",
+          "progress": "12%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "机器学习基础": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 22,
+      "modules": [
+        {
+          "title": "机器学习基础",
+          "phase": "Phase 2: AI工程化",
+          "progress": "25%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "机器学习基础": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 23,
+      "modules": [
+        {
+          "title": "机器学习基础",
+          "phase": "Phase 2: AI工程化",
+          "progress": "37%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "机器学习基础": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 24,
+      "modules": [
+        {
+          "title": "机器学习基础",
+          "phase": "Phase 2: AI工程化",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "机器学习基础": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 25,
+      "modules": [
+        {
+          "title": "机器学习基础",
+          "phase": "Phase 2: AI工程化",
+          "progress": "62%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "机器学习基础": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 26,
+      "modules": [
+        {
+          "title": "机器学习基础",
+          "phase": "Phase 2: AI工程化",
+          "progress": "75%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "机器学习基础": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 27,
+      "modules": [
+        {
+          "title": "机器学习基础",
+          "phase": "Phase 2: AI工程化",
+          "progress": "87%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "机器学习基础": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 28,
+      "modules": [
+        {
+          "title": "机器学习基础",
+          "phase": "Phase 2: AI工程化",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "机器学习基础": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 29,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "8%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 30,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "16%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 31,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "25%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 32,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "33%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 33,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "41%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 34,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 35,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "58%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 36,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "66%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 37,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "75%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 38,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "83%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 39,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "91%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 40,
+      "modules": [
+        {
+          "title": "LLM 工程化实践",
+          "phase": "Phase 2: AI工程化",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "LLM 工程化实践": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 41,
+      "modules": [
+        {
+          "title": "RAG 系统设计与优化",
+          "phase": "Phase 2: AI工程化",
+          "progress": "12%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "RAG 系统设计与优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 42,
+      "modules": [
+        {
+          "title": "RAG 系统设计与优化",
+          "phase": "Phase 2: AI工程化",
+          "progress": "25%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "RAG 系统设计与优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 43,
+      "modules": [
+        {
+          "title": "RAG 系统设计与优化",
+          "phase": "Phase 2: AI工程化",
+          "progress": "37%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "RAG 系统设计与优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 44,
+      "modules": [
+        {
+          "title": "RAG 系统设计与优化",
+          "phase": "Phase 2: AI工程化",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "RAG 系统设计与优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 45,
+      "modules": [
+        {
+          "title": "RAG 系统设计与优化",
+          "phase": "Phase 2: AI工程化",
+          "progress": "62%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "RAG 系统设计与优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 46,
+      "modules": [
+        {
+          "title": "RAG 系统设计与优化",
+          "phase": "Phase 2: AI工程化",
+          "progress": "75%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "RAG 系统设计与优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 47,
+      "modules": [
+        {
+          "title": "RAG 系统设计与优化",
+          "phase": "Phase 2: AI工程化",
+          "progress": "87%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "RAG 系统设计与优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 48,
+      "modules": [
+        {
+          "title": "RAG 系统设计与优化",
+          "phase": "Phase 2: AI工程化",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "RAG 系统设计与优化": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 49,
+      "modules": [
+        {
+          "title": "产品思维与设计",
+          "phase": "Phase 3: 产品业务",
+          "progress": "16%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "产品思维与设计": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 50,
+      "modules": [
+        {
+          "title": "产品思维与设计",
+          "phase": "Phase 3: 产品业务",
+          "progress": "33%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "产品思维与设计": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 51,
+      "modules": [
+        {
+          "title": "产品思维与设计",
+          "phase": "Phase 3: 产品业务",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "产品思维与设计": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 52,
+      "modules": [
+        {
+          "title": "产品思维与设计",
+          "phase": "Phase 3: 产品业务",
+          "progress": "66%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "产品思维与设计": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 53,
+      "modules": [
+        {
+          "title": "产品思维与设计",
+          "phase": "Phase 3: 产品业务",
+          "progress": "83%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "产品思维与设计": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 54,
+      "modules": [
+        {
+          "title": "产品思维与设计",
+          "phase": "Phase 3: 产品业务",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "产品思维与设计": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 55,
+      "modules": [
+        {
+          "title": "数据分析与增长",
+          "phase": "Phase 3: 产品业务",
+          "progress": "16%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据分析与增长": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 56,
+      "modules": [
+        {
+          "title": "数据分析与增长",
+          "phase": "Phase 3: 产品业务",
+          "progress": "33%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据分析与增长": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 57,
+      "modules": [
+        {
+          "title": "数据分析与增长",
+          "phase": "Phase 3: 产品业务",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据分析与增长": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 58,
+      "modules": [
+        {
+          "title": "数据分析与增长",
+          "phase": "Phase 3: 产品业务",
+          "progress": "66%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据分析与增长": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 59,
+      "modules": [
+        {
+          "title": "数据分析与增长",
+          "phase": "Phase 3: 产品业务",
+          "progress": "83%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据分析与增长": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 60,
+      "modules": [
+        {
+          "title": "数据分析与增长",
+          "phase": "Phase 3: 产品业务",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "数据分析与增长": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 61,
+      "modules": [
+        {
+          "title": "市场定位与策略",
+          "phase": "Phase 3: 产品业务",
+          "progress": "25%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "市场定位与策略": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 62,
+      "modules": [
+        {
+          "title": "市场定位与策略",
+          "phase": "Phase 3: 产品业务",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "市场定位与策略": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 63,
+      "modules": [
+        {
+          "title": "市场定位与策略",
+          "phase": "Phase 3: 产品业务",
+          "progress": "75%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "市场定位与策略": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 64,
+      "modules": [
+        {
+          "title": "市场定位与策略",
+          "phase": "Phase 3: 产品业务",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "市场定位与策略": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 65,
+      "modules": [
+        {
+          "title": "客户管理与沟通",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "25%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "客户管理与沟通": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 66,
+      "modules": [
+        {
+          "title": "客户管理与沟通",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "客户管理与沟通": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 67,
+      "modules": [
+        {
+          "title": "客户管理与沟通",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "75%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "客户管理与沟通": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 68,
+      "modules": [
+        {
+          "title": "客户管理与沟通",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "客户管理与沟通": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 69,
+      "modules": [
+        {
+          "title": "项目交付与变革管理",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "16%",
+          "focus_area": "概念理解和基础学习"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "项目交付与变革管理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 70,
+      "modules": [
+        {
+          "title": "项目交付与变革管理",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "33%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "项目交付与变革管理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 71,
+      "modules": [
+        {
+          "title": "项目交付与变革管理",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "50%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "项目交付与变革管理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 72,
+      "modules": [
+        {
+          "title": "项目交付与变革管理",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "66%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "项目交付与变革管理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 73,
+      "modules": [
+        {
+          "title": "项目交付与变革管理",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "83%",
+          "focus_area": "深入学习和实践应用"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "项目交付与变革管理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    },
+    {
+      "week": 74,
+      "modules": [
+        {
+          "title": "项目交付与变革管理",
+          "phase": "Phase 4: 咨询交付",
+          "progress": "100%",
+          "focus_area": "实践项目总结"
+        }
+      ],
+      "total_study_hours": 10,
+      "suggested_breakdown": {
+        "项目交付与变革管理": 10,
+        "复习和总结": 2,
+        "实践项目": 3
+      }
+    }
+  ],
+  "ai_suggestions": {
+    "general_advice": "```json\n{\n  \"learningFocusAndPriority\": {\n    \"overview\": \"作为 Forward Deployed Engineer（FDE），需要兼顾深厚的技术底座、AI 工程化能力以及产品思维和客户交付技巧。建议先夯实 Phase 1 的技术基础，随后快速进入 Phase 2 的 AI 核心能力，最后在业务与咨询阶段完成全链路的闭环训练。\",\n    \"priorityOrder\": [\n      {\n        \"phase\": \"Phase 1\",\n        \"module\": \"编程基础与代码质量\",\n        \"priority\": 1,\n        \"reason\": \"SOLID 与重构是可测试",
+    "focus_areas": [],
+    "challenges": [],
+    "project_suggestions": [],
+    "validation_methods": [],
+    "career_advice": ""
+  },
+  "success_criteria": {
+    "knowledge_acquisition": [
+      "完成所有预定的学习模块",
+      "通过模块自测题目",
+      "能够解释核心概念和原理"
+    ],
+    "practical_skills": [
+      "完成每个模块的实践项目",
+      "代码质量达到生产标准",
+      "能够独立解决实际问题"
+    ],
+    "application_ability": [
+      "能够将所学知识应用到实际项目",
+      "具备技术方案设计能力",
+      "能够进行有效的技术沟通"
+    ],
+    "continuous_learning": [
+      "建立个人知识管理系统",
+      "养成定期复习习惯",
+      "关注技术发展趋势"
+    ]
+  }
+}

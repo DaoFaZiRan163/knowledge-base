@@ -1,0 +1,114 @@
+{
+  "session_id": "interview_20260518_175836",
+  "questions": [
+    {
+      "id": "FDE-001",
+      "question": "你在客户现场部署AI系统时，发现生产环境的模型响应时间从1秒飙升到5秒。客户要求在24小时内解决。请描述你的排查思路和解决方案。",
+      "category": "AI系统可观测性与问题诊断",
+      "difficulty": "senior",
+      "type": "technical",
+      "context": "这是一个典型的FDE客户现场生产问题。客户刚上线AI客服系统，使用的是RAG架构。在高并发时段出现了严重延迟。",
+      "hint": "考虑从模型层、检索层、数据管道、基础设施等多个维度分析。参考Chip Huyen的可观测性框架，重点关注TraceId贯穿全链路的追踪能力。",
+      "reference_answer": "排查思路应遵循'由外到内、由浅入深'原则：\n\n1. 基础设施层：检查GPU/CPU利用率、内存、磁盘IO、网络延迟\n2. 模型服务层：查看模型推理耗时、是否发生OOM、批处理队列积压\n3. 检索层：检查向量数据库查询延迟、Embedding服务响应、检索召回率是否下降\n4. 数据管道：验证数据预处理是否成为瓶颈、缓存是否有效\n5. 上游依赖：外部API调用是否超时\n\n解决方案：\n- 短期：添加熔断降级策略，优先保证核心功能可用\n- 中期：添加缓存层（Redis）、优化批处理、模型量化压缩\n- 长期：构建完整可观测性体系，确保TraceId贯穿全链路",
+      "evaluation_criteria": [
+        "能否系统性地覆盖从基础设施到模型的多个排查维度",
+        "是否理解RAG架构中检索和生成各自可能的瓶颈点",
+        "是否能区分短期应急方案和长期系统性解决方案",
+        "是否提到可观测性建设（TraceId、监控指标）",
+        "是否考虑客户业务连续性而非纯技术优化"
+      ],
+      "time_limit_minutes": 15,
+      "follow_up_questions": [
+        "如果24小时后延迟问题解决，但客户反馈'回答质量下降了'，你怎么处理？",
+        "你如何设计告警规则来提前发现这类性能退化？",
+        "如果要避免类似问题再次发生，你会建议客户建立什么样的SLA标准？"
+      ]
+    },
+    {
+      "id": "FDE-002",
+      "question": "你正在为一家传统制造企业做AI转型咨询。客户CEO在第一次会上直接问：'AI会取代我们多少员工？'部门经理们面色紧张。请描述你会如何回应这个敏感问题，并说明你后续的咨询策略。",
+      "category": "变革管理与客户沟通",
+      "difficulty": "senior",
+      "type": "case study",
+      "context": "这是一家有2000名员工的工厂，主要业务是零部件组装。客户希望用AI提升效率，但对AI持怀疑态度。部门经理担心被裁撤。Executive Sponsor是IT总监，但业务部门对他有抵触。",
+      "hint": "参考企业AI实施手册中'AI取代任务不取代人'的框架。思考如何重构对话，把阻力方变成同盟方。关注Executive Sponsor的真正职责定义。",
+      "reference_answer": "第一步：重构问题框架\n不直接回答'取代多少'，而是把问题转化为'哪些具体工作可以被AI增强'。强调AI替代的是重复性任务，而非人的价值。\n\n第二步：分层分析\n- 识别高风险环节：重复性操作、数据录入、基础客服\n- 识别AI增强机会：质检效率提升、预测性维护\n- 用具体数字（而非猜测）说明潜在价值\n\n第三步：拉同盟\n- 先与IT总监明确他的具体职责（不是挂名）\n- 邀请法务合规在立项初期做co-design\n- 安排管理层与部门经理的坦诚对话\n\n第四步：设计转型路径\n不是'裁员计划'，而是'员工能力升级计划'。从'操作者'转型为'AI协作者'。\n\n关键洞察：技术是最容易的部分，真正的挑战是流程重设计和组织变革。",
+      "evaluation_criteria": [
+        "是否能将技术问题转化为组织变革话题",
+        "是否理解'AI取代任务不取代人'的核心框架",
+        "是否能识别并化解组织阻力（部门经理的担忧）",
+        "是否关注Executive Sponsor的实际职责而非仅是挂名",
+        "是否能设计出包含'流程重设计'预算线的完整提案"
+      ],
+      "time_limit_minutes": 20,
+      "follow_up_questions": [
+        "如果IT总监提出想用AI替代质检员，但质检部门主管强烈反对，你怎么协调？",
+        "你如何向CEO证明AI项目的业务价值（量化指标）？",
+        "在4周pilot阶段，你会设置什么指标来衡量试点成功与否？"
+      ]
+    }
+  ],
+  "responses": {
+    "FDE-001": {
+      "response": "test answer 1",
+      "time_used_minutes": 3.627936045328776e-06,
+      "evaluation": {
+        "content_quality": 1,
+        "logic_clarity": 1,
+        "practical_relevance": 1,
+        "communication": 1,
+        "time_management": 10,
+        "total_score": 2.8,
+        "improvement_suggestions": [
+          "Add more practical examples",
+          "Improve answer structure",
+          "Connect more with business scenarios"
+        ]
+      }
+    },
+    "FDE-002": {
+      "response": "test answer 2",
+      "time_used_minutes": 8.316437403361003e-05,
+      "evaluation": {
+        "content_quality": 1,
+        "logic_clarity": 1,
+        "practical_relevance": 1,
+        "communication": 1,
+        "time_management": 1,
+        "improvement_suggestions": [
+          "This response is a placeholder and does not address the question. A proper answer should include a structured response addressing each evaluation criterion.",
+          "**Recommended Answer Framework:**",
+          "1. **Reframe the Question (AI replaces tasks, not people):** Explain that the focus should be on role redesign and task augmentation, not headcount reduction.",
+          "2. **Address CEO's concern directly:** Present a preliminary analysis showing how AI typically redistributes work rather than eliminating positions entirely.",
+          "3. **Acknowledge department managers' anxiety:** Validate their concerns and position them as key stakeholders in the transformation journey.",
+          "4. **Define Executive Sponsor role:** Clarify that the CEO must actively champion change, allocate resources, and model adoption—not merely approve initiatives.",
+          "5. **Propose next steps:** Outline a phased approach including workforce impact assessment, process mapping, pilot programs, and a comprehensive proposal with budget lines for process redesign, training, and change management."
+        ],
+        "total_score": 1.0
+      }
+    }
+  },
+  "feedback": {},
+  "started_at": "2026-05-18T17:58:36.287852",
+  "completed_at": "2026-05-18T17:59:14.154986",
+  "overall_performance": {
+    "content_quality": 1.0,
+    "logic_clarity": 1.0,
+    "practical_relevance": 1.0,
+    "communication": 1.0,
+    "time_management": 5.5,
+    "total": 1.9
+  },
+  "improvement_suggestions": [
+    "建议深入阅读相关技术文档，增加知识深度",
+    "可以多参与实际项目，积累实战经验",
+    "建议练习结构化表达，使用 STAR 方法组织回答",
+    "可以多做思维导图，提升逻辑思维能力",
+    "建议多关注行业案例和最佳实践",
+    "可以尝试将理论知识应用到实际项目中",
+    "建议多练习口头表达，提升沟通能力",
+    "可以学习商务沟通技巧和演示技能",
+    "建议在练习时严格控制时间",
+    "可以学会快速抓住问题核心，避免过度展开"
+  ]
+}

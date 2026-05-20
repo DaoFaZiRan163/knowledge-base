@@ -1,0 +1,254 @@
+{
+  "rag_basics": {
+    "id": "rag_basics",
+    "title": "RAG 架构原理",
+    "category": "ai-engineering",
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:20:03.809772",
+    "next_review": "2026-06-02T12:20:03.809772",
+    "interval_days": 16,
+    "ease_factor": 2.7,
+    "repetition_count": 3,
+    "quality_scores": [
+      5,
+      5,
+      4
+    ],
+    "importance": "high",
+    "forgetting_index": 0.06666666666666665
+  },
+  "llm_prompt": {
+    "id": "llm_prompt",
+    "title": "Prompt Engineering",
+    "category": "ai-engineering",
+    "difficulty": "beginner",
+    "last_review": "2026-05-17T12:20:03.808277",
+    "next_review": "2026-05-15T12:20:32.607583",
+    "interval_days": 1,
+    "ease_factor": 2.36,
+    "repetition_count": 1,
+    "quality_scores": [
+      3
+    ],
+    "importance": "medium",
+    "forgetting_index": 0.39999999999999997
+  },
+  "system_design": {
+    "id": "system_design",
+    "title": "系统设计原理",
+    "category": "foundation",
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:20:03.808568",
+    "next_review": "2026-05-15T12:20:32.607583",
+    "interval_days": 1,
+    "ease_factor": 1.96,
+    "repetition_count": 0,
+    "quality_scores": [
+      1
+    ],
+    "importance": "high",
+    "forgetting_index": 0.7999999999999999
+  },
+  "sql_opt": {
+    "id": "sql_opt",
+    "title": "SQL 查询优化",
+    "category": "foundation",
+    "difficulty": "beginner",
+    "last_review": "2026-05-17T12:20:03.808849",
+    "next_review": "2026-05-18T12:20:03.808849",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 1,
+    "quality_scores": [
+      4
+    ],
+    "importance": "low",
+    "forgetting_index": 0.19999999999999996
+  },
+  "multi_agent": {
+    "id": "multi_agent",
+    "title": "Multi-Agent 系统",
+    "category": "ai-engineering",
+    "difficulty": "expert",
+    "last_review": "2026-05-17T12:20:03.809166",
+    "next_review": "2026-05-18T12:20:03.809166",
+    "interval_days": 1,
+    "ease_factor": 2.1799999999999997,
+    "repetition_count": 0,
+    "quality_scores": [
+      2
+    ],
+    "importance": "high",
+    "forgetting_index": 0.6
+  },
+  "00-Knowledge-Map": {
+    "id": "00-Knowledge-Map",
+    "title": "00-Knowledge-Map",
+    "category": [
+      "system"
+    ],
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:24:55.908767",
+    "next_review": "2026-05-18T12:24:55.908767",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "00-Test-Calendar": {
+    "id": "00-Test-Calendar",
+    "title": "00-Test-Calendar",
+    "category": [
+      "测试"
+    ],
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:24:55.910107",
+    "next_review": "2026-05-18T12:24:55.910107",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "00-Test-Dataview": {
+    "id": "00-Test-Dataview",
+    "title": "00-Test-Dataview",
+    "category": [
+      "测试"
+    ],
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:24:55.910800",
+    "next_review": "2026-05-18T12:24:55.910800",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "00-Test-Tasks": {
+    "id": "00-Test-Tasks",
+    "title": "00-Test-Tasks",
+    "category": [
+      "测试"
+    ],
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:24:55.911450",
+    "next_review": "2026-05-18T12:24:55.911450",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "00-Test-Templater": {
+    "id": "00-Test-Templater",
+    "title": "00-Test-Templater",
+    "category": [
+      "测试"
+    ],
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:24:55.912101",
+    "next_review": "2026-05-18T12:24:55.912101",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "Obsidian插件配置": {
+    "id": "Obsidian插件配置",
+    "title": "Obsidian 插件安装指南",
+    "category": "foundation",
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:24:55.912724",
+    "next_review": "2026-05-18T12:24:55.912724",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "AI-Engineering-Chip-Huyen": {
+    "id": "AI-Engineering-Chip-Huyen",
+    "title": "AI-Engineering-Chip-Huyen",
+    "category": [
+      "ai-engineering",
+      "llm-engineering"
+    ],
+    "difficulty": "advanced",
+    "last_review": "2026-05-17T12:24:55.914030",
+    "next_review": "2026-05-18T12:24:55.914030",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "RAG架构原理": {
+    "id": "RAG架构原理",
+    "title": "RAG架构原理",
+    "category": [
+      "ai-engineering",
+      "rag-systems"
+    ],
+    "difficulty": "intermediate",
+    "last_review": "2026-05-17T12:24:55.915136",
+    "next_review": "2026-05-18T12:24:55.915136",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "test_001": {
+    "id": "test_001",
+    "title": "RAG Architecture",
+    "category": "ai-engineering",
+    "difficulty": "senior",
+    "last_review": "2026-05-18T18:49:53.620654",
+    "next_review": "2026-05-19T18:49:53.620654",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "high",
+    "forgetting_index": 1.0
+  },
+  "test_002": {
+    "id": "test_002",
+    "title": "Multi-Tenant Design",
+    "category": "system-design",
+    "difficulty": "senior",
+    "last_review": "2026-05-18T18:49:53.621338",
+    "next_review": "2026-05-19T18:49:53.621338",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "medium",
+    "forgetting_index": 1.0
+  },
+  "test_003": {
+    "id": "test_003",
+    "title": "Client Communication",
+    "category": "consulting",
+    "difficulty": "intermediate",
+    "last_review": "2026-05-18T18:49:53.622079",
+    "next_review": "2026-05-19T18:49:53.622079",
+    "interval_days": 1,
+    "ease_factor": 2.5,
+    "repetition_count": 0,
+    "quality_scores": [],
+    "importance": "low",
+    "forgetting_index": 1.0
+  }
+}

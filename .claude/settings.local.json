@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip list *)",
+      "Bash(pip install *)",
+      "Bash(python -m automation.cli path --hours 10)",
+      "Bash(python -m automation.cli interview --count 3)",
+      "Bash(python -m py_compile automation/spaced_repetition.py)",
+      "Bash(python -m automation.cli interview --count 2)",
+      "Bash(python -c ' *)",
+      "WebFetch(domain:daofaziran163.github.io)",
+      "Bash(powershell.exe *)",
+      "Bash(ls -la core/product-business/*.md)",
+      "Bash(ls -la core/product-business/ai-product-methods/*.md)",
+      "Bash(ls -la core/ai-engineering/Day*.md)",
+      "Bash(ls core/ai-engineering/Day*.md)",
+      "Bash(python automation/paper_processor.py)",
+      "Bash(curl -s -X DELETE \"http://localhost:6333/collections/fde_knowledge\")",
+      "Bash(curl -s \"http://localhost:6333/collections\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\([c['name'] for c in d['result']['collections']]\\)\")",
+      "Bash(PYTHONIOENCODING=utf-8 python *)"
+    ]
+  }
+}
