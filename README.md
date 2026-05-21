@@ -11,11 +11,20 @@
 | 功能 | 说明 |
 |------|------|
 | **AI 对话学习** | 基于本地知识库的递归式补洞学习器，AI陪你深度理解概念 |
+| **向量知识库** | Markdown → Embedding → Qdrant 向量数据库，支持语义搜索 |
 | **知识摄入** | 网页/文本/文件 → 结构化笔记（支持 ASR/TTS/NLU/外呼等主题） |
 | **学习路径** | 根据目标岗位要求生成个性化学习路径 |
 | **面试准备** | AI 基于知识库动态生成 FDE 相关面试题 |
 | **间隔复习** | Spaced Repetition 算法驱动，遗忘曲线优化记忆 |
 | **知识评估** | 真实理解 vs 死记硬背测试题，检验掌握程度 |
+
+### 向量知识库
+
+```
+笔记 (.md) → 切分 (chunk) → Embedding → Qdrant 向量库 → 语义搜索
+
+当前状态: 1344 chunks, 1024维 (Qwen3-Embedding-0.6B)
+```
 
 ---
 
@@ -163,9 +172,37 @@ ANTHROPIC_API_KEY=your_anthropic_api_key_here
 # 查看所有命令
 python -m automation.cli --help
 
-# AI 对话学习（推荐入门方式）
-python automation/gap_filling.py
+### AI 对话学习（推荐入门方式）
 
+基于本地知识库的递归式补洞学习器，AI 陪你深度理解概念：
+
+```bash
+python automation/gap_filling.py
+```
+
+**学习流程：**
+
+1. **选择主题** — 从 `core/` 知识库中挑选（支持换一批 `r`，已掌握主题可选复习）
+2. **选择切入角度**：
+   - `[1]` 专家共识思维模式
+   - `[2]` 争议热点与局限性
+   - `[3]` 真理解 vs 死记硬背测试题
+   - `[0]` 自定义问题
+3. **AI 讲解** — 结合知识库内容进行深度分析
+4. **多轮追问** — 继续深入直到完全理解
+5. **输入 `m`** — 保存掌握记录，进入下一个主题
+
+**对话中可用命令：**
+
+| 命令 | 说明 |
+|------|------|
+| `m` / 我已经完全理解 | 保存掌握记录，结束当前主题 |
+| `n` / 新会话 | 重新选择主题和角度 |
+| `q` / 退出 | 退出程序 |
+
+**已掌握知识：** 保存于 `docs/mastered_knowledge.json`，可反复复习。
+
+```bash
 # 生成学习路径
 python -m automation.cli path --topic "RAG系统" --hours 20
 
@@ -181,7 +218,67 @@ python -m automation.cli web --url "https://example.com/article"
 
 # 知识库统计
 python -m automation.cli status
+
+# 同步 Obsidian 到 NotebookLM
+python -m automation.cli sync
+
+# 论文处理（PDF → 结构化笔记）
+python automation/paper_processor.py
+
+# 综合统计报告（知识库/学习进度/面试表现/知识网络）
+python automation/knowledge_stats.py --report
+
+# 向量知识库操作
+python -m automation.knowledge_ingestion --action ingest          # 重新摄入所有笔记
+python -m automation.knowledge_ingestion --action search           # 搜索知识库
 ```
+
+### 论文处理
+
+将 PDF 论文自动解析为标准笔记模板，生成 FDE 应用场景分析：
+
+```bash
+python automation/paper_processor.py
+```
+
+**功能特点：**
+- 自动提取论文标题、作者、页数
+- 生成中文摘要和架构原理
+- 附赠 FDE 实际应用场景分析
+- 输出到 `core/ai-engineering/` 目录
+
+### 知识统计报告
+
+多维度分析知识库状态和学习进度：
+
+```bash
+# 综合报告（知识概览 + 学习进度 + 面试表现 + 知识网络）
+python automation/knowledge_stats.py --report
+
+# 单项报告
+python automation/knowledge_stats.py --overview    # 知识概览
+python automation/knowledge_stats.py --progress  # 学习进度
+python automation/knowledge_stats.py --interview  # 面试表现
+python automation/knowledge_stats.py --network    # 知识网络
+
+# 输出格式（默认 text，可选 json/markdown）
+python automation/knowledge_stats.py --report --format markdown
+```
+
+### Obsidian ↔ NotebookLM 同步
+
+将 Obsidian 笔记同步到 NotebookLM 并建立向量索引：
+
+```bash
+python -m automation.cli sync
+```
+
+**同步内容：**
+- 扫描 `core/` 目录下所有 Markdown 笔记
+- 转换为 NotebookLM 友好格式（移除 Mermaid/Dataview 代码块）
+- 导出到 `sync_output/notebooklm/` 目录（可手动导入 NotebookLM）
+- 向量化后写入 Qdrant 向量数据库
+- 基于内容哈希实现增量同步（未变更文档跳过）
 
 ---
 
@@ -270,4 +367,4 @@ git push origin feature/new-concept
 
 **项目目标**：帮助技术从业者系统化掌握 FDE 核心能力，成功获得 FDE 工程师岗位。
 
-**最后更新**：2026-05-20
+**最后更新**：2026-05-21

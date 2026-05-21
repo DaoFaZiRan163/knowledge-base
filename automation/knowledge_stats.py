@@ -4,11 +4,17 @@ FDE Knowledge Hub - Knowledge Statistics Module
 """
 
 import json
+import sys
 from pathlib import Path
 from typing import Dict, List, Any
 from datetime import datetime
 from collections import Counter
 import re
+
+# Windows GBK terminal fix
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 class KnowledgeStats:
@@ -185,8 +191,7 @@ class KnowledgeStats:
                                 category_scores[category] = []
                             category_scores[category].append(score)
 
-            except Exception as e:
-                print(f"Error reading {report_file}: {e}")
+            except Exception:
                 continue
 
         # 计算统计数据

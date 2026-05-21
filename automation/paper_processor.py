@@ -6,9 +6,15 @@
 import fitz
 import re
 import json
+import sys
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional
+
+# Windows UTF-8 fix
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 # 项目根目录
 PROJECT_ROOT = Path(__file__).parent.parent
