@@ -2,7 +2,7 @@
 type: concept
 category: ["ai-engineering", "llm-concepts"]
 difficulty: intermediate
-tags: ["Guardrail", "输出质量", "成本监控", "内容安全", "LLM治理"]
+tags: ["Guardrail", "内容安全", "成本监控", "LLM治理"]
 source: 原创
 created_date: 2026-05-19
 updated_date: 2026-05-19
@@ -12,11 +12,15 @@ related_concepts: ["MCP协议与配额预占", "并发熔断与容灾降级"]
 prerequisites: ["LLM基础原理"]
 ---
 
-# 输出Guardrail与成本监控
+# Guardrail与成本监控
 
 ## 核心定义
 
-**Guardrail (护栏)**：在 AI 输入/输出端设置的控制机制，用于过滤有害内容、限制不当响应、确保输出符合预期。
+**Guardrail (护栏)**：在 AI 输入端和输出端设置的控制机制，用于过滤有害内容、限制不当响应、确保输出符合预期。
+
+**输入Guardrail**：在请求发往 LLM 前验证输入内容，包括恶意提示注入检测、敏感词过滤、格式验证等。
+
+**输出Guardrail**：在结果返回给用户前验证输出内容，包括有害内容过滤、事实错误检测、隐私信息泄露检测等。
 
 **成本监控 (Cost Monitoring)**：实时追踪 LLM API 调用成本，分析使用模式，预防超支。
 
@@ -27,7 +31,7 @@ prerequisites: ["LLM基础原理"]
 > **Guardrail = 内容过滤 + 行为限制；成本监控 = 实时追踪 + 预警预防**
 
 ```
-输入 → Guardrail检查 → LLM → Guardrail检查 → 输出
+输入Guardrail检查 → LLM → 输出Guardrail检查
          ↓                    ↓
       过滤危险输入         过滤有害输出
 

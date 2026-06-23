@@ -766,17 +766,23 @@
       ]
     },
     {
-      "name": "输出Guardrail",
+      "name": "Guardrail",
       "category": "安全控制",
-      "description": "对AI生成的完整输出进行检查和过滤的安全机制",
-      "coverage": "文本、图片、音频三类输出全覆盖",
-      "checks": [
-        "内容合规检查",
-        "直销违规话术检测",
-        "Prompt Injection二次检测（输出侧）",
-        "图片内容安全审核"
-      ],
-      "position_in_flow": "在精确扣减配额之前执行",
+      "description": "对AI输入和输出进行检查和过滤的安全机制，在请求发往LLM前验证输入，在结果返回给用户前验证输出",
+      "coverage": "文本、图片、音频的输入与输出全覆盖",
+      "checks": {
+        "input": [
+          "输入合规检查",
+          "Prompt Injection检测",
+          "恶意指令过滤"
+        ],
+        "output": [
+          "内容合规检查",
+          "Prompt Injection二次检测（输出侧）",
+          "图片内容安全审核"
+        ]
+      },
+      "position_in_flow": "输入Guardrail在LLM调用前执行，输出Guardrail在精确扣减配额前执行",
       "fail_action": "检测不通过，不返回给用户，不扣减配额，记录日志"
     },
     {

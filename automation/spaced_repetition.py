@@ -6,7 +6,7 @@ FDE Knowledge Hub - Spaced Repetition System
 import json
 import random
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 from dataclasses import dataclass, asdict
 
@@ -31,7 +31,7 @@ class ReviewItem:
 class SpacedRepetitionSystem:
     """间隔重复学习系统"""
 
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config: Dict[str, Any]) -> None:
         self.config = config
         self.project_root = Path(__file__).parent.parent
         self.review_data_file = self.project_root / "docs" / "review_data.json"
@@ -62,7 +62,7 @@ class SpacedRepetitionSystem:
 
         return {}
 
-    def _save_review_data(self):
+    def _save_review_data(self) -> None:
         """保存复习数据"""
         self.review_data_file.parent.mkdir(parents=True, exist_ok=True)
 
@@ -74,7 +74,7 @@ class SpacedRepetitionSystem:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
     def add_review_item(self, item_id: str, title: str, category: str,
-                       difficulty: str, importance: str = "medium"):
+                       difficulty: str, importance: str = "medium") -> None:
         """添加复习项目"""
         if item_id in self.review_items:
             return
@@ -100,7 +100,7 @@ class SpacedRepetitionSystem:
         self.review_items[item_id] = review_item
         self._save_review_data()
 
-    def record_review(self, item_id: str, quality: int):
+    def record_review(self, item_id: str, quality: int) -> None:
         """记录复习结果"""
         if item_id not in self.review_items:
             raise ValueError(f"复习项目不存在: {item_id}")
@@ -415,8 +415,8 @@ class SpacedRepetitionSystem:
 
         return selected_items
 
-    def import_from_obsidian(self, note_ids: List[str]):
-        """从 Obsidian 导入复习项目"""
+    def import_from_obsidian(self, note_ids: Optional[List[str]] = None) -> None:
+        """从 Obsidian 导入复习项目（扫描 core/ 下全部笔记，note_ids 预留过滤参数）"""
         # 扫描 Obsidian 笔记，自动添加复习项目
         core_path = self.project_root / "core"
 
@@ -440,7 +440,7 @@ class SpacedRepetitionSystem:
                     importance=metadata.get('importance', 'medium')
                 )
 
-    def export_to_obsidian(self, review_items: List[Dict[str, Any]]):
+    def export_to_obsidian(self, review_items: List[Dict[str, Any]]) -> None:
         """导出到 Obsidian"""
         review_templates_path = self.project_root / "templates" / "review_notes"
         review_templates_path.mkdir(parents=True, exist_ok=True)
@@ -597,9 +597,10 @@ class SpacedRepetitionSystem:
         return {}
 
 
-def main():
+def main() -> None:
     """主函数，用于命令行调用"""
     import argparse
+    import os
 
     parser = argparse.ArgumentParser(description='FDE 间隔重复学习系统')
     parser.add_argument('--import-notes', '-i', action='store_true',

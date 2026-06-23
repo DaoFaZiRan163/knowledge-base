@@ -81,6 +81,9 @@ class FDEMockInterview:
 
     def _build_knowledge_summary(self, role_requirement: str) -> str:
         """检索本地知识库，返回摘要文本用于 prompt"""
+        if not role_requirement:
+            return "（未提供查询条件，请基于通用 FDE 经验生成题目）"
+
         if self._ingester is None:
             return "（知识库不可用，请基于通用 FDE 经验生成题目）"
 

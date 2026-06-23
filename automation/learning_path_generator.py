@@ -525,7 +525,7 @@ class FDELearningPathGenerator:
             suggestions_text = re.sub(r'<think>.*?</think>', '', suggestions_text, flags=re.DOTALL).strip()
 
             # 提取最外层 JSON 对象（跳过 markdown 代码块标记）
-            json_match = re.search(r'\{.*\}', suggestions_text, re.DOTALL)
+            json_match = re.search(r'\{[\s\S]*\}', suggestions_text)
             if json_match:
                 return json.loads(json_match.group())
             else:

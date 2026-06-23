@@ -20,7 +20,7 @@ if sys.platform == "win32":
 class KnowledgeStats:
     """知识统计器"""
 
-    def __init__(self, project_root: Path):
+    def __init__(self, project_root: Path) -> None:
         self.project_root = project_root
         self.core_path = project_root / "core"
         self.templates_path = project_root / "templates"
@@ -293,7 +293,7 @@ class KnowledgeStats:
             'generated_at': datetime.now().isoformat()
         }
 
-    def display_stats(self, stats: Dict[str, Any], format: str = 'text'):
+    def display_stats(self, stats: Dict[str, Any], format: str = 'text') -> None:
         """显示统计信息"""
         if format == 'text':
             self._display_text_stats(stats)
@@ -302,7 +302,7 @@ class KnowledgeStats:
         elif format == 'markdown':
             self._display_markdown_stats(stats)
 
-    def _display_text_stats(self, stats: Dict[str, Any]):
+    def _display_text_stats(self, stats: Dict[str, Any]) -> None:
         """以文本格式显示统计"""
         print("📊 FDE Knowledge Hub 统计报告")
         print("=" * 50)
@@ -369,7 +369,7 @@ class KnowledgeStats:
         print("\n" + "=" * 50)
         print(f"生成时间: {stats.get('generated_at', 'unknown')}")
 
-    def _display_markdown_stats(self, stats: Dict[str, Any]):
+    def _display_markdown_stats(self, stats: Dict[str, Any]) -> None:
         """以 Markdown 格式显示统计"""
         md_content = "# FDE Knowledge Hub 统计报告\n\n"
 
@@ -486,7 +486,7 @@ class KnowledgeStats:
             return 'declining_rapidly'
 
 
-def main():
+def main() -> None:
     """主函数，用于命令行调用"""
     import argparse
 

@@ -7,7 +7,7 @@ import os
 import re
 import json
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
 import hashlib
 from datetime import datetime
@@ -68,7 +68,7 @@ _KNOWN_DIMS = {
 class FDEKnowledgeIngester:
     """FDE 知识摄取器"""
 
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config: Dict[str, Any]) -> None:
         self.config = config
         self.project_root = Path(__file__).parent.parent
 
@@ -125,7 +125,7 @@ class FDEKnowledgeIngester:
             }
         }
 
-    def scan_knowledge_sources(self, category: str = None, difficulty: str = None) -> List[Dict]:
+    def scan_knowledge_sources(self, category: Optional[str] = None, difficulty: Optional[str] = None) -> List[Dict]:
         """扫描知识源"""
         sources = []
 
@@ -137,7 +137,7 @@ class FDEKnowledgeIngester:
 
         return sources
 
-    def _scan_books(self, category: str = None, difficulty: str = None) -> List[Dict]:
+    def _scan_books(self, category: Optional[str] = None, difficulty: Optional[str] = None) -> List[Dict]:
         """扫描书籍文件"""
         books_path = self.project_root / "assets" / "books"
         sources = []
@@ -164,7 +164,7 @@ class FDEKnowledgeIngester:
 
         return sources
 
-    def _scan_papers(self, category: str = None, difficulty: str = None) -> List[Dict]:
+    def _scan_papers(self, category: Optional[str] = None, difficulty: Optional[str] = None) -> List[Dict]:
         """扫描学术论文"""
         papers_path = self.project_root / "assets" / "papers"
         sources = []
@@ -189,7 +189,7 @@ class FDEKnowledgeIngester:
 
         return sources
 
-    def _scan_obsidian_notes(self, category: str = None, difficulty: str = None) -> List[Dict]:
+    def _scan_obsidian_notes(self, category: Optional[str] = None, difficulty: Optional[str] = None) -> List[Dict]:
         """扫描 Obsidian 笔记"""
         core_path = self.project_root / "core"
         sources = []
@@ -214,7 +214,7 @@ class FDEKnowledgeIngester:
 
         return sources
 
-    def _scan_code_examples(self, category: str = None, difficulty: str = None) -> List[Dict]:
+    def _scan_code_examples(self, category: Optional[str] = None, difficulty: Optional[str] = None) -> List[Dict]:
         """扫描代码示例"""
         code_path = self.project_root / "assets" / "code-examples"
         sources = []
@@ -496,7 +496,7 @@ class FDEKnowledgeIngester:
             )
             return response.data[0].embedding
 
-    def index_knowledge(self, chunks: List[KnowledgeChunk]):
+    def index_knowledge(self, chunks: List[KnowledgeChunk]) -> None:
         """将知识块索引到向量数据库"""
         # 创建集合（向量维度 1536 与 MiniMax embo-01 / OpenAI text-embedding-3-small 均兼容）
         collection_name = "fde_knowledge"
@@ -682,7 +682,7 @@ class FDEKnowledgeIngester:
         return functions
 
 
-def main():
+def main() -> None:
     """主函数，用于命令行调用"""
     import argparse
 

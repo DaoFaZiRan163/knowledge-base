@@ -28,6 +28,40 @@
 
 ---
 
+## 🛠️ 工程实现亮点
+
+本项目除知识内容外，包含一套约 5800 行的 Python 自动化工具集（`automation/` + `integration/`），核心工程能力：
+
+- **多提供商 Embedding 抽象**：在 `knowledge_ingestion.py` 中统一封装 SiliconFlow / MiniMax / OpenAI / 本地 sentence-transformers 四种嵌入后端，自动按优先级回退；针对 MiniMax 嵌入接口格式不同（`texts` vs `input`、`vectors` vs `data[].embedding`）单独用 httpx 适配，并维护「模型→向量维度」映射表。
+- **RAG 检索流水线**：Markdown/PDF/代码 → 文本清洗 → 递归切分（LangChain splitter）→ 向量化 → Qdrant 写入/语义检索，全链路可复现。
+- **SM-2 间隔重复算法**：`spaced_repetition.py` 实现基于遗忘曲线的复习调度，包含难易度因子（ease factor）演化、间隔递增（1→6→×EF）、失败重置、遗忘指数加权排序与复习时间估算。
+- **递归补洞学习器**：`gap_filling.py` 结合向量检索 + LLM，动态生成「专家共识 / 争议热点 / 真理解测试」三类切入角度的对话式学习。
+- **增量同步**：`integration/obsidian_notebooklm_sync.py` 基于内容哈希实现未变更文档跳过，避免重复向量化。
+- **工程规范**：统一 `dataclass` 数据建模、`pathlib` 路径处理、`click` + `rich` CLI、模块级 docstring、类型注解（核心模块覆盖参数与返回值），并处理了 Windows GBK 终端的 UTF-8 输出。
+
+---
+
+## ✅ 测试与质量保障
+
+核心纯逻辑由 `tests/` 下的 pytest 用例覆盖（**49 个测试，全部通过**），不依赖网络或向量库，可离线运行：
+
+```bash
+pip install -r requirements.txt
+pytest                      # 运行全部测试
+pytest -v                   # 查看每个用例
+pytest tests/test_spaced_repetition.py   # 单独运行某模块
+```
+
+| 测试文件 | 覆盖范围 |
+|----------|----------|
+| `test_spaced_repetition.py` | SM-2 间隔演化、ease factor 下限、失败重置、遗忘指数、到期筛选与排序、统计 |
+| `test_knowledge_stats.py` | 阶段→分类映射、线性回归进步趋势、front matter 解析、知识库概览统计 |
+| `test_knowledge_ingestion.py` | 文本清洗、分块 ID、代码注释/函数提取、文件名元数据、维度映射（重依赖缺失时自动 skip） |
+
+> 依赖向量库/LLM 的副作用通过 pytest `tmp_path` 与 `__new__` 绕过构造进行隔离，保证测试快速、确定、无外部依赖。
+
+---
+
 ## 🗂️ 知识体系结构
 
 ```
@@ -367,4 +401,4 @@ git push origin feature/new-concept
 
 **项目目标**：帮助技术从业者系统化掌握 FDE 核心能力，成功获得 FDE 工程师岗位。
 
-**最后更新**：2026-05-21
+**最后更新**：2026-06-23
